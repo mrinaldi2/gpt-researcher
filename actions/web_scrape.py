@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
@@ -19,7 +20,6 @@ from selenium.webdriver.safari.options import Options as SafariOptions
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from fastapi import WebSocket
-import chromedriver_autoinstaller
 
 import processing.text as summary
 
@@ -32,7 +32,6 @@ executor = ThreadPoolExecutor()
 
 FILE_DIR = Path(__file__).parent.parent
 CFG = Config()
-chromedriver_autoinstaller.install() #Installs the latest compat version of chromedriver
 
 
 async def async_browse(url: str, question: str, websocket: WebSocket, rabbit) -> str:
@@ -139,11 +138,16 @@ def scrape_text_with_selenium(url: str) -> tuple[WebDriver, str]:
         if platform == "linux" or platform == "linux2":
             options.add_argument("--disable-dev-shm-usage")
             options.add_argument("--remote-debugging-port=9222")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--window-size=800,600")
         options.add_argument("--no-sandbox")
         options.add_experimental_option(
             "prefs", {"download_restrictions": 3}
         )
-        driver = webdriver.Chrome(options=options)
+        driver = webdriver.Remote(
+            command_executor="http://selenium-hub:4444/wd/hub",
+            options=options
+        )
     driver.get(url)
 
     WebDriverWait(driver, 10).until(
