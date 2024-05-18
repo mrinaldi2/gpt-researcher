@@ -16,7 +16,7 @@ from uuid import uuid4
 from dotenv import load_dotenv
 
 from gpt_researcher import GPTResearcher
-from gpt_researcher.utils.enum import ReportType
+from gpt_researcher.utils.enum import ReportType, ReportSource
 
 # =============================================================================
 # CLI
@@ -74,6 +74,7 @@ async def main(args):
     """
     researcher = GPTResearcher(
         query=args.query,
+        report_source=ReportSource.Internal.value,
         report_type=args.report_type)
 
     await researcher.conduct_research()

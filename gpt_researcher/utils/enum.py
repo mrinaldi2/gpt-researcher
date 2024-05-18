@@ -1,4 +1,6 @@
 from enum import Enum
+
+
 class ReportType(Enum):
     ResearchReport = 'research_report'
     ResourceReport = 'resource_report'
@@ -6,7 +8,8 @@ class ReportType(Enum):
     CustomReport = 'custom_report'
     DetailedReport = 'detailed_report'
     SubtopicReport = 'subtopic_report'
-    
+
+
 class ReportSource(Enum):
     External = 'internet'
     Internal = 'documents'

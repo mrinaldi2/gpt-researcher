@@ -1,6 +1,8 @@
 from gpt_researcher import GPTResearcher
 import asyncio
 
+from gpt_researcher.utils.enum import ReportSource
+
 
 async def main():
     """
@@ -13,7 +15,7 @@ async def main():
     report_type = "research_report"
 
     # Initialize the researcher
-    researcher = GPTResearcher(query=query, report_type=report_type, config_path=None)
+    researcher = GPTResearcher(query=query, report_source=ReportSource.Internal.value, report_type=report_type, config_path=None)
     # Conduct research on the given query
     await researcher.conduct_research()
     # Write the report

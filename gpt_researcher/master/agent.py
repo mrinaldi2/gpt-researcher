@@ -87,6 +87,7 @@ class GPTResearcher:
             context = await self.get_context_by_urls(self.source_urls)
             
         elif self.report_source == ReportSource.Internal.value:
+            await stream_output("logs", f"🔎 Starting to load documents in '{self.cfg.doc_path}'...", self.websocket)
             document_data = await DocumentLoader(self.cfg.doc_path).load()
             context = await self.get_context_by_search(self.query, document_data)
         
