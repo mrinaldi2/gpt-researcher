@@ -8,7 +8,8 @@ from langchain_community.document_loaders import (
     UnstructuredExcelLoader,
     UnstructuredMarkdownLoader, 
     UnstructuredPowerPointLoader,
-    UnstructuredWordDocumentLoader
+    UnstructuredWordDocumentLoader,
+    UnstructuredEPubLoader
 )
 
 
@@ -52,6 +53,7 @@ class DocumentLoader:
                 "csv": UnstructuredCSVLoader(file_path, mode="elements"),
                 "xls": UnstructuredExcelLoader(file_path, mode="elements"),
                 "xlsx": UnstructuredExcelLoader(file_path, mode="elements"),
+                "epub": UnstructuredEPubLoader(file_path, mode="elements"),
                 "md": UnstructuredMarkdownLoader(file_path)
             }
 
